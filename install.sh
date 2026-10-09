@@ -48,28 +48,15 @@ if [ -z "$API_KEY" ]; then
     echo "     Add the following line to your ~/.bashrc or ~/.profile:"
     echo "       export GROQ_API_KEY=\"your_key_here\""
 else
-    # Persist to ~/.bashrc (avoids duplicates)
-    BASHRC="$HOME/.bashrc"
-    if grep -q "GROQ_API_KEY" "$BASHRC" 2>/dev/null; then
-        # Update the existing line in place
-        sed -i "s|^export GROQ_API_KEY=.*|export GROQ_API_KEY=\"$API_KEY\"|" "$BASHRC"
-        echo "      ✓ Updated GROQ_API_KEY in $BASHRC"
-    else
-        echo "" >> "$BASHRC"
-        echo "# Groq API key — added by AI Screen Inspector installer" >> "$BASHRC"
-        echo "export GROQ_API_KEY=\"$API_KEY\"" >> "$BASHRC"
-        echo "      ✓ Added GROQ_API_KEY to $BASHRC"
-    fi
-
-    # Also inject into the wrapper script so KDE global shortcuts pick it up
-    # (KDE's hotkey daemon doesn't inherit ~/.bashrc)
-    WRAPPER="$HOME/.local/bin/run-ai-snipper.sh"
-    if grep -q "GROQ_API_KEY" "$WRAPPER" 2>/dev/null; then
-        sed -i "s|^export GROQ_API_KEY=.*|export GROQ_API_KEY=\"$API_KEY\"|" "$WRAPPER"
-    else
-        sed -i "2a export GROQ_API_KEY=\"$API_KEY\"" "$WRAPPER"
-    fi
-    echo "      ✓ Injected GROQ_API_KEY into run-ai-snipper.sh (for KDE hotkey daemon)"
+    # Save to a dedicated, secure config file
+    CONFIG_DIR="$HOME/.config/ai-screen-inspector"
+    CONFIG_FILE="$CONFIG_DIR/env"
+    
+    mkdir -p "$CONFIG_DIR"
+    echo 'export GROQ_API_KEY="'"$API_KEY"'"' > "$CONFIG_FILE"
+    chmod 600 "$CONFIG_FILE"
+    
+    echo "      ✓ Saved API key securely to $CONFIG_FILE"
 fi
 
 # ── Step 4: Done ───────────────────────────────────────────────────────────
@@ -77,10 +64,7 @@ echo ""
 echo "[4/4] Installation complete!"
 echo ""
 echo "  Next step — set up your global hotkey in KDE:"
-echo "    System Settings → Shortcuts → Add New → Command or URL"
-echo "    Command : $HOME/.local/bin/run-ai-snipper.sh"
+echo "    System Settings → Custom Shortcuts → Add New → Command or URL"
+echo "    Command : aisnip"
 echo "    Shortcut: e.g. Ctrl+Alt+A"
-echo ""
-echo "  To apply the API key in your current terminal session now, run:"
-echo "    source ~/.bashrc"
 echo ""
