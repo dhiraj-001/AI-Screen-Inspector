@@ -115,22 +115,45 @@ Flameshot should appear. If it does, KDE can run the script — proceed to Step 
 
 ---
 
-### Step 3 — Bind to a Global Shortcut
+### Step 3 — Create a Short Command (`aisnip`) — Recommended
+
+KDE's shortcut dialog has a known bug where **pasting a long path silently adds a trailing newline**, causing:
+> `Could not find the program '/home/dhiraj/.local/bin/run-ai-snipper.sh↵'`
+
+The fix is to create a **single short word command** — `aisnip` — that KDE can find without any path at all:
+
+```bash
+cat > ~/.local/bin/aisnip << 'EOF'
+#!/bin/bash
+exec /home/dhiraj/.local/bin/run-ai-snipper.sh
+EOF
+chmod +x ~/.local/bin/aisnip
+```
+
+Verify it works:
+
+```bash
+aisnip
+```
+
+Flameshot should open. Now bind it in KDE:
 
 1. Open **System Settings** → search **"Custom Shortcuts"** → open it.
 2. **Delete any previous AI Snip entries** to avoid conflicts.
 3. Click **Add New → Global Shortcut → Command/URL**.
 4. Configure the entry:
    - **Name**: `AI Snip & Inspect`
-   - **Command/URL**: `/home/dhiraj/.local/bin/run-ai-snipper.sh`
+   - **Command/URL**: `aisnip`
 5. Click the **Shortcut** button and assign a combo — recommended:
    - `Ctrl + Alt + A` or `Meta + Alt + S`
    - ⚠️ Avoid `Meta+Shift+S` and `Print` — they are bound to KDE Spectacle by default.
 6. Click **Apply**.
 
 > [!CAUTION]
-> **Do NOT paste the path** — KDE's dialog can silently include a trailing newline, causing
-> `Could not find the program '/home/...`. **Type the path manually** in the Command/URL field.
+> **NEVER paste into the Command/URL field** — not even a short path.
+> KDE's dialog silently appends a newline character when you paste, making the command fail.
+> **Always type the command manually with your keyboard.**
+> Since `aisnip` is only 6 characters, this is easy to type.
 
 ## How to Use & Workflow
 
