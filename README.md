@@ -2,6 +2,9 @@
 
 AI Screen Inspector is a Linux desktop utility that allows you to quickly capture a region of your screen, extract the text using OCR, and send it to an AI model (via Groq Cloud API) with a custom prompt. It features a modern dark-mode GUI built with PyQt6.
 
+![AI Screen Inspector Demo](imgs/terminal.png)
+
+
 ## System Architecture Overview
 
 ```text
@@ -141,12 +144,18 @@ Flameshot should open. Now bind it in KDE:
 1. Open **System Settings** → search **"Custom Shortcuts"** → open it.
 2. **Delete any previous AI Snip entries** to avoid conflicts.
 3. Click **Add New → Global Shortcut → Command/URL**.
+
+![Command Setup 1](imgs/command_setup1.png)
+
 4. Configure the entry:
    - **Name**: `AI Snip & Inspect`
    - **Command/URL**: `aisnip`
 5. Click the **Shortcut** button and assign a combo — recommended:
    - `Ctrl + Alt + A` or `Meta + Alt + S`
    - ⚠️ Avoid `Meta+Shift+S` and `Print` — they are bound to KDE Spectacle by default.
+
+![Command Setup 2](imgs/command_setup2.png)
+
 6. Click **Apply**.
 
 > [!CAUTION]
