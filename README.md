@@ -4,6 +4,15 @@ AI Screen Inspector is a Linux desktop utility that allows you to quickly captur
 
 ![AI Screen Inspector Demo](imgs/terminal.png)
 
+## Key Features
+
+- **Instant Screen-to-AI Pipeline**: Snip any region of your screen—code blocks, errors, unselectable text, or documentation—and instantly send it to a Large Language Model.
+- **Local OCR Extraction**: Uses `Tesseract` to run Optical Character Recognition locally on your machine, ensuring fast text extraction before the AI step.
+- **Blazing Fast AI Inference**: Powered by the Groq Cloud API, delivering near-instant streaming token generation. 
+- **Model Flexibility**: Choose dynamically between cutting-edge models (e.g., Llama 3.3 70B, Mixtral 8x7b) directly from the popup.
+- **Customizable Prompts & Parameters**: Tune your query on the fly. Adjust Temperature and Max Tokens to dictate how creative or concise the AI should be.
+- **Modern Desktop UI**: A sleek, dark-mode, distraction-free interface built in PyQt6.
+- **Native KDE Plasma Integration**: Operates flawlessly with KDE global shortcuts, overlaying on any workspace.
 
 ## System Architecture Overview
 
